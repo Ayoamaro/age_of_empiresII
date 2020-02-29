@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: script.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: script.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable quote-props */
+/* eslint-disable no-undef */
+/* eslint-disable prefer-const */
+
+/**
+ * @file script.js es el archivo JS de la prática (U10P01 - Civilizaciones del Age of Empires II)
+ * @author Ayoze Amaro Estévez
+ */
+const arrayCiv = [];
+const busquedaCiv = [];
+var i = 0;
+var search = false;
+
+$('#spinnerUI').show();
+document.getElementById("botonBusqueda").addEventListener("click", busquedaCivilizacion);
+
+$(document).ready(function() {
+  $('#spinnerUI').hide();
+});
+
+$.ajax({
+    url: 'https://age-of-empires-2-api.herokuapp.com/api/v1/civilizations',
+    type: "GET",
+    success: function(response) {
+        arrayCiv.push(response);
+        while (i &lt; arrayCiv[0].civilizations.length) {
+          var divPrincipal = document.getElementById('MyComponent');
+          var element = document.createElement('div');
+          element.setAttribute('id', `ReactElement${i}`);
+          divPrincipal.append(element);
+          ReactDOM.render(&lt;Cards />, document.getElementById(`ReactElement${i}`));
+          i++;
+        }
+    },
+    error: function(jqXHR) {
+      if (jqXHR.status === 0) {
+        alert('Not connect: Verify Network.');
+      }
+    },
+		complete: function() {
+	    $('#spinnerUI').hide();
+		}
+});
+
+/**
+ * Esta función tiene la funcionalidad recibir el nombre o ID escrito en el cuadro de búsqueda y procesar los datos
+ * @event target
+ * @type {function}
+ */
+function busquedaCivilizacion() {
+  $('#spinnerUI').show();
+	$('#MyComponent').empty();
+  $('#botonBusqueda').hide();
+  var busquedaUsuario = $("#busqueda").val();
+  search = true;
+	$.ajax({
+	  url: `https://age-of-empires-2-api.herokuapp.com/api/v1/civilization/${busquedaUsuario}`,
+	  method: "GET",
+	  success: function(result) {
+      busquedaCiv.push(result);
+      console.log(busquedaCiv);
+      var divPrincipal = document.getElementById('MyComponent');
+      var element = document.createElement('div');
+      element.setAttribute('id', 'ReactElement');
+      divPrincipal.append(element);
+      ReactDOM.render(&lt;Cards />, document.getElementById('ReactElement'));
+	  },
+		complete: function() {
+      $('#spinnerUI').hide();
+    }, 
+    error: function(jqXHR) {
+      if (jqXHR.status == 404) {
+        ReactDOM.render(&lt;Empty />, document.getElementById('MyComponent'));
+      }
+    }
+  });
+}
+
+/**
+ *
+ * Esta función recibe los datos de cada clase de React para imprimirlos por pantalla
+ * @param {*} paramCiv Parámetro recibido por las clases de React
+ * @returns {string} Retorna tanto el nombre, como el tipo de arma y el bonus de la civilización
+ */
+function datosCiv(paramCiv) {
+  if (search == false) {
+    var name = arrayCiv[0].civilizations[i].name;
+    var army_type = arrayCiv[0].civilizations[i].army_type;
+    var civilization_bonus = arrayCiv[0].civilizations[i].civilization_bonus.toString();
+  }
+  else {
+    var name = busquedaCiv[0].name;
+    var army_type = busquedaCiv[0].army_type;
+    var civilization_bonus = busquedaCiv[0].civilization_bonus.toString();
+  }
+  
+  switch (paramCiv) {
+    case 'name':
+      return &lt;h1>{name}&lt;/h1>;
+    case 'army_type':
+      return &lt;h4>{army_type}&lt;/h4>;
+    case 'civilization_bonus':
+      return &lt;p>{civilization_bonus}&lt;/p>;
+  }
+}
+
+/**
+ *
+ * Esta clase de React devuelve un mensaje de error sino se encuentran resultados durante la búsqueda del usuario
+ * @class Empty
+ * @extends {Component}
+ * @returns {string} Retorna el mensaje de error ante una búsqueda nula de resultados
+ */
+class Empty extends React.Component {
+  render() {
+    return &lt;h4>No se han encontrado resultados con los parámetros establecidos... Por favor, inténtelo de nuevo.&lt;/h4>;
+  }
+}
+
+/**
+ *
+ * Esta clase de React genera un div donde imrpimirá el nombre, arma y bonus de las civilizaciones obtenidas
+ * @class Cards
+ * @extends {Component}
+ * @returns {string} Retorna el div con los datos de la civilización
+ */
+class Cards extends React.Component {
+  render() {
+    return (
+      &lt;div id='cards'>
+        &lt;Name />
+        &lt;Army_Type />
+        &lt;Civ_Bonus />
+      &lt;/div>
+    );
+  }
+}
+
+/**
+ *
+ * Esta clase de React envía a la función 'datosCiv' el Nombre de la civilización
+ * @class Name
+ * @extends {Component}
+ * @returns {string} Retorna el nombre de la civilización
+ */
+class Name extends React.Component {
+  render() {
+    return datosCiv('name');
+  }
+}
+
+/**
+ *
+ * Esta clase de React envía a la función 'datosCiv' el Tipo de Arma de la civilización
+ * @class Army_Type
+ * @extends {Component}
+ * @returns {string} Retorna el tipo de arma de la civilización
+ */
+class Army_Type extends React.Component {
+  render() {
+    return datosCiv('army_type');
+  }
+}
+
+/**
+ *
+ * Esta clase de React envía a la función 'datosCiv' el Bonus de la civilización
+ * @class Civ_Bonus
+ * @extends {Component}
+ * @returns {string} Retorna el bonus de la civilización
+ */
+class Civ_Bonus extends React.Component {
+  render() {
+    return datosCiv('civilization_bonus');
+  }
+}
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Army_Type.html">Army_Type</a></li><li><a href="Cards.html">Cards</a></li><li><a href="Civ_Bonus.html">Civ_Bonus</a></li><li><a href="Empty.html">Empty</a></li><li><a href="Name.html">Name</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:target">target</a></li></ul><h3>Global</h3><ul><li><a href="global.html#datosCiv">datosCiv</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Feb 29 2020 23:35:05 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

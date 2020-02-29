@@ -1,0 +1,73 @@
+body {
+  font-family: 'Source Sans Pro';
+}
+
+#logo {
+  text-align: center;
+  margin: 20px;
+}
+
+#logo img {
+  width: 250px;
+}
+
+#logo input {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  background-image: url("../img/searchicon.png");
+  background-position: 10px 10px;
+  font-size: 16px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 14px 40px;
+  font-family: 'Source Sans Pro';
+}
+
+#logo button {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 13px;
+  font-family: 'Source Sans Pro';
+}
+
+#logo button:hover {
+  background-color: #e7e7e7;
+}
+
+#MyComponent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#MyComponent div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#MyComponent #cards {
+  border: 2px dashed #ccc;
+  border-radius: 4px;
+  margin: 5px;
+  display: initial;
+  text-align: center;
+  font-size: 15px;
+  width: 200px;
+  padding: 10px;
+}
+
+#MyComponent #cards h1 {
+  font-family: 'Open Sans';
+}
+/*# sourceMappingURL=style.css.map */
