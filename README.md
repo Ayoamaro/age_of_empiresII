@@ -18,11 +18,11 @@ El proyecto de estar publicado en github pages o firebase.
 El JSON puede ser obtenido directamente de la API e incorporando con un JSON o bien mediante peticiones asíncronas.
 
 ## Ejecución
-1. Descargar [el Proyecto](https://bit.ly/3gk3SIw) y descomprimir
-2. Abrir con [Visual Studio Code](https://code.visualstudio.com) o algún editor de código
-3. Descargar el [Live Server](https://bit.ly/3elOzNx)
-3. Abrir el **index.html** y ejecutarlo con la opción "Go Live"
-4. Instalar y activar el plugin [Allow CORS: Access-Control-Allow-Origin](https://bit.ly/36rafW3)
+1. Descargar [el Proyecto](https://bit.ly/3gk3SIw) y descomprimir.
+2. Abrir con [Visual Studio Code](https://code.visualstudio.com) o algún editor de código.
+3. Descargar el [Live Server](https://bit.ly/3elOzNx).
+3. Abrir el **index.html** y ejecutarlo con la opción "Go Live".
+4. Instalar y activar el plugin [Allow CORS: Access-Control-Allow-Origin](https://bit.ly/36rafW3).
 
 ## Hecho con
 * [HTML5](https://developer.mozilla.org/es/docs/HTML/HTML5) - **41,98%**
