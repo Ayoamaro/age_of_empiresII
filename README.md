@@ -18,7 +18,7 @@ El proyecto de estar publicado en github pages o firebase.
 El JSON puede ser obtenido directamente de la API e incorporando con un JSON o bien mediante peticiones asíncronas.
 
 ## Ejecución
-1. Descargar [el Proyecto](https://bit.ly/2zt6DGT) y descomprimir
+1. Descargar [el Proyecto](https://bit.ly/3gk3SIw) y descomprimir
 2. Abrir con [Visual Studio Code](https://code.visualstudio.com) o algún editor de código
 3. Descargar el [Live Server](https://bit.ly/3elOzNx)
 3. Abrir el **index.html** y ejecutarlo con la opción "Go Live"
